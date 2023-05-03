@@ -30,13 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // TimerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(580, 235);
-            this.Name = "Form1";
+            this.Name = "TimerForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.TimerForm_Load);
             this.ResumeLayout(false);
 
         }
