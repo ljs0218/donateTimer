@@ -7,7 +7,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json.Linq;
 
 namespace donateTimer
 {
@@ -25,7 +25,7 @@ namespace donateTimer
         public event EventHandler<Donate> onDonate;
         public event EventHandler onSubscribe;
 
-        public async Task Begin(string key)
+        public async Task Init(string key)
         {
             /* Get version and token information */
             Document doc = HttpConnection.Connect($"https://toon.at/widget/alertbox/{key}").Get();
@@ -38,9 +38,9 @@ namespace donateTimer
             {
                 Console.WriteLine("오류 : [페이로드 찾을 수 없음]");
             }
- 
+
             /* Create URI for websocket connection */
-            string uriString = $"wss://toon.at:8071/"+ payload;
+            string uriString = $"wss://toon.at:8071/" + payload;
             Uri uri = new Uri(uriString);
 
             /* Initialize Websocket client */
@@ -56,39 +56,33 @@ namespace donateTimer
 
         private void OnDisconnected(DisconnectionInfo info)
         {
-            Console.WriteLine($"[Disconnected. Reason: {(info.Exception != null ? info.Exception.Message : "(None)")}]");
+            Console.WriteLine($"[Toonation Disconnected. Reason: {(info.Exception != null ? info.Exception.Message : "(None)")}]");
         }
         private void OnReconnecting(ReconnectionInfo info)
         {
-            Console.WriteLine($"[Re-connecting... Type: {info.Type}]");
+            Console.WriteLine($"[Toonation Re-connecting... Type: {info.Type}]");
         }
         private void OnMessageReceived(ResponseMessage message)
         {
-            Console.WriteLine($"[Received Message] \n\tType:{message.MessageType}\n\tContent > {message.Text}");
+            Console.WriteLine($"[Toonation Received Message] \n\tType:{message.MessageType}\n\tContent > {message.Text}");
             Parse(message.Text);
         }
 
-        //42["new donate",{"_id":"ev9NJQEeQB","nickname":"내가 도와줄게 상수짱 삭감!","amount":4500,"comment":"[yt:swX1O_a_vAk:0]","watcher_id":"404432041","subbed":true,"repeat":false,"ttstype":"heyguys","ttsurl":[],"customImage":"","slotmachine_data":null,"effect":{},"variation_id":null}]
-
-        private void Parse(string str)
+        private void Parse(string msg)
         {
-            // 이벤트 핸들러 호출
             if (onDonate != null)
             {
-                Donate donate = null;
-                onDonate(null, donate);
-            }
-
-            if (str.Contains("media:playing"))
-            {
-
-                if (RegexMatchFromString(str, @"""type"":""(.{0,15})"",") == "youtube")
+                if (msg.StartsWith("{\"code\":101"))
                 {
-                    // NOTE: needs better parsing
-                    string id = RegexMatchFromString(str, @"""id"":""(.{1,15})"",");
-                    string start = RegexMatchFromString(str, @"""start"":(\d*),");
-                    string duration = RegexMatchFromString(str, @"""duration"":(\d*),");
+                    Donate donate = new Donate();
+                    var donateObj = JObject.Parse(msg);
+                    donate.id = (string)donateObj["content"]["account"];
+                    donate.nickname = (string)donateObj["content"]["name"];
+                    donate.comment = (string)donateObj["content"]["message"];
+                    donate.amount = (int)donateObj["content"]["amount"];
+                    donate.platform = Platform.Toonation;
 
+                    onDonate(this, donate);
                 }
             }
         }

@@ -7,7 +7,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json.Linq;
 
 namespace donateTimer
 {
@@ -25,7 +25,7 @@ namespace donateTimer
         public event EventHandler<Donate> onDonate;
         public event EventHandler onSubscribe;
 
-        public async Task Begin(string key)
+        public async Task Init(string key)
         {
             /* Get version and token information */
             Document doc = HttpConnection.Connect($"https://twip.kr/widgets/alertbox/{key}").Get();
@@ -78,29 +78,28 @@ namespace donateTimer
             Parse(message.Text);
         }
 
-        //42["new donate",{"_id":"ev9NJQEeQB","nickname":"내가 도와줄게 상수짱 삭감!","amount":4500,"comment":"[yt:swX1O_a_vAk:0]","watcher_id":"404432041","subbed":true,"repeat":false,"ttstype":"heyguys","ttsurl":[],"customImage":"","slotmachine_data":null,"effect":{},"variation_id":null}]
-
-        private void Parse(string str)
+        private void Parse(string msg)
         {
             // 이벤트 핸들러 호출
+
             if (onDonate != null)
             {
-                Donate donate = null;
-                onDonate(null, donate);
-            }
-
-            if (str.Contains("media:playing"))
-            {
-
-                if (RegexMatchFromString(str, @"""type"":""(.{0,15})"",") == "youtube")
+                if (msg.StartsWith("42[\"new donate\""))
                 {
-                    // NOTE: needs better parsing
-                    string id = RegexMatchFromString(str, @"""id"":""(.{1,15})"",");
-                    string start = RegexMatchFromString(str, @"""start"":(\d*),");
-                    string duration = RegexMatchFromString(str, @"""duration"":(\d*),");
+                    msg = msg.Substring(2);
+                    Donate donate = new Donate();
 
+                    var donateObj = JArray.Parse(msg);
+                    donate.id = (string)donateObj[1]["_id"];
+                    donate.nickname = (string)donateObj[1]["nickname"];
+                    donate.amount = (int)donateObj[1]["amount"];
+                    donate.comment = (string)donateObj[1]["comment"];
+                    donate.platform = Platform.Twip;
+
+                    onDonate(null, donate);
                 }
             }
+
         }
 
         private static string RegexMatchFromString(string input, string pattern)

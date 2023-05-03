@@ -74,7 +74,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Donate.cs" />
-    <Compile Include="DonationCatcher.cs" />
+    <Compile Include="Toonation.cs" />
+    <Compile Include="Twip.cs" />
     <Compile Include="TimerForm.cs">
       <SubType>Form</SubType>
     </Compile>
