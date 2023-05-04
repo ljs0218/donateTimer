@@ -12,6 +12,12 @@ namespace donateTimer
         Toonation
     }
 
+    public enum Type
+    {
+        Add,
+        Sub
+    }
+
     public class Donate
     {
         public string id;
@@ -20,5 +26,6 @@ namespace donateTimer
         public string comment;
 
         public Platform platform;
+        public Type type;
     }
 }

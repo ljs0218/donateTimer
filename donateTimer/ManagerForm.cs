@@ -16,5 +16,15 @@ namespace donateTimer
         {
             InitializeComponent();
         }
+
+        private void startBtn_Click(object sender, EventArgs e)
+        {
+            TimeController.GetInstance().StartTimer();
+        }
+
+        private void stopBtn_Click(object sender, EventArgs e)
+        {
+            TimeController.GetInstance().StopTimer();
+        }
     }
 }

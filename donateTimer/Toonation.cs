@@ -16,12 +16,14 @@ namespace donateTimer
         private WebsocketClient socket;
 
         /*
-            onConnectReady : 트윕과 처음으로 연결되었을 때
+            onConnectSuccess : 트윕과 처음으로 연결되었을 때
+            onConnectFailed : 연결 실패했을 때
             onDonate : 후원, 영상후원, 슬롯머신(룰렛)
             onSubscribe : 구독
          */
 
-        public event EventHandler onConnectReady;
+        public event EventHandler onConnectSuccess;
+        public event EventHandler onConnectFailed;
         public event EventHandler<Donate> onDonate;
         public event EventHandler onSubscribe;
 
@@ -37,6 +39,11 @@ namespace donateTimer
             if (payload == null)
             {
                 Console.WriteLine("오류 : [페이로드 찾을 수 없음]");
+                if (onConnectFailed != null)
+                {
+                    onConnectFailed(null, null);
+                    return;
+                }
             }
 
             /* Create URI for websocket connection */
@@ -49,6 +56,11 @@ namespace donateTimer
             socket.DisconnectionHappened.Subscribe(OnDisconnected);
             socket.ReconnectionHappened.Subscribe(OnReconnecting);
             socket.MessageReceived.Subscribe(OnMessageReceived);
+
+            if (onConnectSuccess != null)
+            {
+                onConnectSuccess(null, null);
+            }
 
             /* Start */
             await socket.Start();

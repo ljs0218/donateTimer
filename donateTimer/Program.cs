@@ -16,7 +16,8 @@ namespace donateTimer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TimerForm());
+            (new MainForm()).Show();
+            Application.Run();
         }
     }
 }

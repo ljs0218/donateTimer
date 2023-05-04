@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using System.Windows.Interop;
 
 namespace donateTimer
 {
@@ -16,12 +17,14 @@ namespace donateTimer
         private WebsocketClient socket;
 
         /*
-            onConnectReady : 트윕과 처음으로 연결되었을 때
+            onConnectSuccess : 트윕과 처음으로 연결되었을 때
+            onConnectFailed : 연결 실패했을 때
             onDonate : 후원, 영상후원, 슬롯머신(룰렛)
             onSubscribe : 구독
          */
 
-        public event EventHandler onConnectReady;
+        public event EventHandler onConnectSuccess;
+        public event EventHandler onConnectFailed;
         public event EventHandler<Donate> onDonate;
         public event EventHandler onSubscribe;
 
@@ -38,10 +41,20 @@ namespace donateTimer
             if (version == null)
             {
                 Console.WriteLine("오류 : [버전 찾을 수 없음]");
+                if (onConnectFailed != null)
+                {
+                    onConnectFailed(null, null);
+                    return;
+                }
             }
             if (token == null)
             {
                 Console.WriteLine("오류 : [토큰 찾을 수 없음]");
+                if (onConnectFailed != null)
+                {
+                    onConnectFailed(null, null);
+                    return;
+                }
             }
 
             /* Create URI for websocket connection */
@@ -59,6 +72,11 @@ namespace donateTimer
             socket.DisconnectionHappened.Subscribe(OnDisconnected);
             socket.ReconnectionHappened.Subscribe(OnReconnecting);
             socket.MessageReceived.Subscribe(OnMessageReceived);
+
+            if (onConnectSuccess != null)
+            {
+                onConnectSuccess(null, null);
+            }
 
             /* Start */
             await socket.Start();
@@ -80,8 +98,6 @@ namespace donateTimer
 
         private void Parse(string msg)
         {
-            // 이벤트 핸들러 호출
-
             if (onDonate != null)
             {
                 if (msg.StartsWith("42[\"new donate\""))
@@ -90,7 +106,7 @@ namespace donateTimer
                     Donate donate = new Donate();
 
                     var donateObj = JArray.Parse(msg);
-                    donate.id = (string)donateObj[1]["_id"];
+                    donate.id = (string)donateObj[1]["watcher_id"];
                     donate.nickname = (string)donateObj[1]["nickname"];
                     donate.amount = (int)donateObj[1]["amount"];
                     donate.comment = (string)donateObj[1]["comment"];
