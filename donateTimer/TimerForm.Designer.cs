@@ -36,10 +36,11 @@
             // timeLabel
             // 
             this.timeLabel.AutoSize = true;
-            this.timeLabel.Font = new System.Drawing.Font("굴림", 14F);
-            this.timeLabel.Location = new System.Drawing.Point(12, 24);
+            this.timeLabel.Font = new System.Drawing.Font("굴림", 54F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.timeLabel.Location = new System.Drawing.Point(2, 9);
+            this.timeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(254, 38);
+            this.timeLabel.Size = new System.Drawing.Size(483, 72);
             this.timeLabel.TabIndex = 0;
             this.timeLabel.Text = "00:00:00.000";
             // 
@@ -51,10 +52,12 @@
             // 
             // TimerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(993, 235);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(488, 92);
             this.Controls.Add(this.timeLabel);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "TimerForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.TimerForm_Load);

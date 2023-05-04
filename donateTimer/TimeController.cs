@@ -10,7 +10,7 @@ namespace donateTimer
 {
     public class TimeController
     {
-        public TimeSpan nowTime = new TimeSpan(24, 0, 0);
+        public TimeSpan nowTime = new TimeSpan(1000, 0, 0);
         public int minFromWon = 100;
 
         private long previousTick;

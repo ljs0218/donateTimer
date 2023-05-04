@@ -13,7 +13,7 @@ namespace donateTimer
 {
     public partial class TimerForm : Form
     {
-        private const string TIME_FORMAT = "{0}:{1:D2}:{2:D2}.{3:D3}";
+        private const string TIME_FORMAT = "{0}:{1:D2}:{2:D2}.{3:D2}";
 
         public TimerForm()
         {
@@ -28,7 +28,7 @@ namespace donateTimer
         private void timer1_Tick(object sender, EventArgs e)
         {
             TimeSpan time = TimeController.GetInstance().nowTime;
-            timeLabel.Text = string.Format(TIME_FORMAT, (int)time.TotalHours, time.Minutes, time.Seconds, time.Milliseconds);
+            timeLabel.Text = string.Format(TIME_FORMAT, (int)time.TotalHours, time.Minutes, time.Seconds, time.Milliseconds.ToString());
         }
     }
 }
