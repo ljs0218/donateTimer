@@ -9,7 +9,8 @@ namespace donateTimer
     public enum Platform
     {
         Twip,
-        Toonation
+        Toonation,
+        Admin
     }
 
     public enum Type
@@ -27,5 +28,13 @@ namespace donateTimer
 
         public Platform platform;
         public Type type;
+    }
+
+    public class Option
+    {
+        public int selectedIndex;
+        public int minFromWon;
+        public bool addChecked;
+        public bool subChecked;
     }
 }

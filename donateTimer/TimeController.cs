@@ -10,12 +10,13 @@ namespace donateTimer
 {
     public class TimeController
     {
-        public TimeSpan nowTime = new TimeSpan(1000, 0, 0);
-        public int minFromWon = 100;
+        public TimeSpan nowTime = new TimeSpan(24, 0, 0);
+        public Option option = new Option();
 
-        private long previousTick;
-        private bool isRunning;
-        private Stopwatch sw = new Stopwatch();
+        private Stopwatch stopwatch = new Stopwatch();
+
+        private const string ADD_MESSAGE = "추가";
+        private const string SUB_MESSAGE = "삭감";
 
         private static TimeController instance;
         public static TimeController GetInstance()
@@ -29,28 +30,25 @@ namespace donateTimer
 
         public void StartTimer()
         {
-            previousTick = sw.ElapsedMilliseconds;
-            isRunning = true;
-            sw.Start();
-            RefreshTime();
+            stopwatch.Start();
         }
 
         public void StopTimer()
         {
-            isRunning = false;
-            sw.Stop();
+            stopwatch.Stop();
         }
 
-        async void RefreshTime()
+        long lastTick = 0;
+        public void Update()
         {
-            while (isRunning)
+            long currentTick = stopwatch.ElapsedMilliseconds;
+            int elapsedTick = (int)(currentTick - this.lastTick);
+            this.lastTick = currentTick;
+            nowTime = nowTime.Subtract(new TimeSpan(0, 0, 0, 0, elapsedTick));
+            if (nowTime.Milliseconds < 0)
             {
-                long currentTime = sw.ElapsedMilliseconds;
-                long deltaTick = currentTime - previousTick;
-
-                nowTime -= TimeSpan.FromMilliseconds(deltaTick);
-                previousTick = currentTime;
-                await Task.Delay(10);
+                nowTime = new TimeSpan(0, 0, 0, 0, 0);
+                stopwatch.Stop();
             }
         }
 
@@ -64,15 +62,38 @@ namespace donateTimer
             nowTime = nowTime.Subtract(TimeSpan.FromMilliseconds(milliseconds));
         }
 
-        public void AddDonate(Donate donate)
+        public void Donate(Donate donate)
         {
-            long mills = ((donate.amount / minFromWon) * 60) * 1000;
-            AddTimeFromMilliseconds(mills);
+            if (donate.nickname.Contains(ADD_MESSAGE) || donate.comment.Contains(ADD_MESSAGE))
+            {
+                donate.type = Type.Add;
+            }
+            else if (donate.nickname.Contains(SUB_MESSAGE) || donate.comment.Contains(SUB_MESSAGE))
+            {
+                donate.type = Type.Sub;
+            }
+
+            long mills = ((donate.amount / option.minFromWon) * 60) * 1000;
+            switch (donate.type)
+            {
+                case Type.Add:
+                    if (option.addChecked)
+                        AddTimeFromMilliseconds(mills);
+                    break;
+
+                case Type.Sub:
+                    if (option.subChecked)
+                        SubTimeFromMilliseconds(mills);
+                    break;
+
+                default: break;
+
+            }
         }
 
         public void SubDonate(Donate donate)
         {
-            long mills = ((donate.amount / minFromWon) * 60) * 1000;
+            long mills = ((donate.amount / option.minFromWon) * 60) * 1000;
             SubTimeFromMilliseconds(mills);
         }
     }

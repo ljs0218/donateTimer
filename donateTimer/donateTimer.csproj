@@ -74,11 +74,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Donate.cs" />
+    <Compile Include="FileController.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TimeController.cs" />
     <Compile Include="Toonation.cs" />
@@ -102,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ManagerForm.resx">
       <DependentUpon>ManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TimerForm.resx">
       <DependentUpon>TimerForm.cs</DependentUpon>

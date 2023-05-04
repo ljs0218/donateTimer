@@ -36,49 +36,53 @@
             // 
             // twipBox
             // 
-            this.twipBox.Location = new System.Drawing.Point(23, 23);
+            this.twipBox.Location = new System.Drawing.Point(12, 12);
+            this.twipBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.twipBox.Name = "twipBox";
-            this.twipBox.Size = new System.Drawing.Size(190, 35);
+            this.twipBox.Size = new System.Drawing.Size(104, 21);
             this.twipBox.TabIndex = 0;
-            this.twipBox.Text = "PBvNXmw5qp";
             // 
             // toonationBox
             // 
-            this.toonationBox.Location = new System.Drawing.Point(241, 23);
+            this.toonationBox.Location = new System.Drawing.Point(130, 12);
+            this.toonationBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.toonationBox.Name = "toonationBox";
-            this.toonationBox.Size = new System.Drawing.Size(190, 35);
+            this.toonationBox.Size = new System.Drawing.Size(104, 21);
             this.toonationBox.TabIndex = 1;
-            this.toonationBox.Text = "f07544f8835c57c908763ae409bb2bb2";
             // 
             // twipConnectBtn
             // 
-            this.twipConnectBtn.Location = new System.Drawing.Point(23, 83);
+            this.twipConnectBtn.Location = new System.Drawing.Point(12, 42);
+            this.twipConnectBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.twipConnectBtn.Name = "twipConnectBtn";
-            this.twipConnectBtn.Size = new System.Drawing.Size(190, 72);
+            this.twipConnectBtn.Size = new System.Drawing.Size(102, 45);
             this.twipConnectBtn.TabIndex = 2;
-            this.twipConnectBtn.Text = "button1";
+            this.twipConnectBtn.Text = "Twip 연동";
             this.twipConnectBtn.UseVisualStyleBackColor = true;
             this.twipConnectBtn.Click += new System.EventHandler(this.twipConnectBtn_Click);
             // 
             // toonationConnectBtn
             // 
-            this.toonationConnectBtn.Location = new System.Drawing.Point(241, 83);
+            this.toonationConnectBtn.Location = new System.Drawing.Point(130, 42);
+            this.toonationConnectBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.toonationConnectBtn.Name = "toonationConnectBtn";
-            this.toonationConnectBtn.Size = new System.Drawing.Size(190, 72);
+            this.toonationConnectBtn.Size = new System.Drawing.Size(102, 45);
             this.toonationConnectBtn.TabIndex = 3;
-            this.toonationConnectBtn.Text = "button2";
+            this.toonationConnectBtn.Text = "Toonation 연동";
             this.toonationConnectBtn.UseVisualStyleBackColor = true;
             this.toonationConnectBtn.Click += new System.EventHandler(this.toonationConnectBtn_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(457, 226);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(246, 98);
             this.Controls.Add(this.toonationConnectBtn);
             this.Controls.Add(this.twipConnectBtn);
             this.Controls.Add(this.toonationBox);
             this.Controls.Add(this.twipBox);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);

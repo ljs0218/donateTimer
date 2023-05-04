@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -13,7 +14,7 @@ namespace donateTimer
 {
     public partial class TimerForm : Form
     {
-        private const string TIME_FORMAT = "{0}:{1:D2}:{2:D2}.{3:D2}";
+        private const string TIME_FORMAT = "{0:D3}:{1:mm\\:ss\\.ff}";
 
         public TimerForm()
         {
@@ -27,8 +28,9 @@ namespace donateTimer
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            TimeSpan time = TimeController.GetInstance().nowTime;
-            timeLabel.Text = string.Format(TIME_FORMAT, (int)time.TotalHours, time.Minutes, time.Seconds, time.Milliseconds.ToString());
+            TimeController.GetInstance().Update();
+            TimeSpan ts = TimeController.GetInstance().nowTime;
+            this.timeLabel.Text = string.Format(TIME_FORMAT, (int)ts.TotalHours, ts);
         }
     }
 }

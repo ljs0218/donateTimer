@@ -40,9 +40,9 @@
             this.timeLabel.Location = new System.Drawing.Point(2, 9);
             this.timeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(483, 72);
+            this.timeLabel.Size = new System.Drawing.Size(441, 72);
             this.timeLabel.TabIndex = 0;
-            this.timeLabel.Text = "00:00:00.000";
+            this.timeLabel.Text = "00:00:00.00";
             // 
             // timer1
             // 
@@ -57,7 +57,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(488, 92);
             this.Controls.Add(this.timeLabel);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TimerForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.TimerForm_Load);

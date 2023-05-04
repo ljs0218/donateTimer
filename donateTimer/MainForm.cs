@@ -18,9 +18,6 @@ namespace donateTimer
         //private const string TWIP_KEY = "PBvNXmw5qp";
         //private const string TOONATION_KEY = "f07544f8835c57c908763ae409bb2bb2";
 
-        private const string ADD_MESSAGE = "추가";
-        private const string SUB_MESSAGE = "삭감";
-
         private bool isConnectTwip = false;
         private bool isConnectToonation = false;
 
@@ -54,6 +51,11 @@ namespace donateTimer
             isConnectTwip = true;
             twipConnectBtn.Enabled = false;
             twip.onDonate += new EventHandler<Donate>(OnDonate);
+
+            string[] accounts = FileController.LoadAccountData();
+            accounts[0] = twipBox.Text;
+            FileController.SaveAccountData(accounts);
+
             CheckConnect();
         }
 
@@ -62,6 +64,11 @@ namespace donateTimer
             isConnectToonation = true;
             toonationConnectBtn.Enabled = false;
             toonation.onDonate += new EventHandler<Donate>(OnDonate);
+
+            string[] accounts = FileController.LoadAccountData();
+            accounts[1] = toonationBox.Text;
+            FileController.SaveAccountData(accounts);
+
             CheckConnect();
         }
 
@@ -88,33 +95,18 @@ namespace donateTimer
 
         void OnDonate(object sender, Donate e)
         {
-            if (e.nickname.Contains(ADD_MESSAGE) || e.comment.Contains(ADD_MESSAGE))
-            {
-                e.type = Type.Add;
-            }
-            else if (e.nickname.Contains(SUB_MESSAGE) || e.comment.Contains(SUB_MESSAGE))
-            {
-                e.type = Type.Sub;
-            }
-
-            switch (e.type)
-            {
-                case Type.Add:
-                    TimeController.GetInstance().AddDonate(e);
-                    break;
-
-                case Type.Sub:
-                    TimeController.GetInstance().SubDonate(e);
-                    break;
-
-                default:
-                    break;
-            }
+            TimeController.GetInstance().Donate(e);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            TimeController.GetInstance().option = FileController.LoadOptionData();
+            string[] accounts = FileController.LoadAccountData();
+            if (accounts.Length > 1)
+            {
+                twipBox.Text = accounts[0];
+                toonationBox.Text = accounts[1];
+            }
         }
     }
 }
