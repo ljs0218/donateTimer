@@ -92,7 +92,7 @@ namespace donateTimer
         }
         private void OnMessageReceived(ResponseMessage message)
         {
-            Console.WriteLine($"[Received Message] \n\tType:{message.MessageType}\n\tContent > {message.Text}");
+            Console.WriteLine($"[Received Message] \n\tContent > {message.Text}");
             Parse(message.Text);
         }
 
