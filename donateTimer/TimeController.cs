@@ -75,6 +75,10 @@ namespace donateTimer
             {
                 donate.type = Type.Sub;
             }
+            else
+            {
+                return;
+            }
 
             long mills = ((donate.amount / option.minFromWon) * 60) * 1000;
             switch (donate.type)
