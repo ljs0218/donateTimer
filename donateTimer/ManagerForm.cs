@@ -109,5 +109,10 @@ namespace donateTimer
         {
             new SettingForm().ShowDialog();
         }
+
+        private void ManagerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

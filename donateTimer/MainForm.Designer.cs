@@ -37,23 +37,25 @@
             // twipBox
             // 
             this.twipBox.Location = new System.Drawing.Point(12, 12);
-            this.twipBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.twipBox.Margin = new System.Windows.Forms.Padding(2);
             this.twipBox.Name = "twipBox";
+            this.twipBox.PasswordChar = '*';
             this.twipBox.Size = new System.Drawing.Size(104, 21);
             this.twipBox.TabIndex = 0;
             // 
             // toonationBox
             // 
             this.toonationBox.Location = new System.Drawing.Point(130, 12);
-            this.toonationBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.toonationBox.Margin = new System.Windows.Forms.Padding(2);
             this.toonationBox.Name = "toonationBox";
+            this.toonationBox.PasswordChar = '*';
             this.toonationBox.Size = new System.Drawing.Size(104, 21);
             this.toonationBox.TabIndex = 1;
             // 
             // twipConnectBtn
             // 
             this.twipConnectBtn.Location = new System.Drawing.Point(12, 42);
-            this.twipConnectBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.twipConnectBtn.Margin = new System.Windows.Forms.Padding(2);
             this.twipConnectBtn.Name = "twipConnectBtn";
             this.twipConnectBtn.Size = new System.Drawing.Size(102, 45);
             this.twipConnectBtn.TabIndex = 2;
@@ -64,7 +66,7 @@
             // toonationConnectBtn
             // 
             this.toonationConnectBtn.Location = new System.Drawing.Point(130, 42);
-            this.toonationConnectBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.toonationConnectBtn.Margin = new System.Windows.Forms.Padding(2);
             this.toonationConnectBtn.Name = "toonationConnectBtn";
             this.toonationConnectBtn.Size = new System.Drawing.Size(102, 45);
             this.toonationConnectBtn.TabIndex = 3;
@@ -82,7 +84,8 @@
             this.Controls.Add(this.twipConnectBtn);
             this.Controls.Add(this.toonationBox);
             this.Controls.Add(this.twipBox);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);

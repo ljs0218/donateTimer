@@ -46,7 +46,7 @@
             // startBtn
             // 
             this.startBtn.Location = new System.Drawing.Point(14, 217);
-            this.startBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.startBtn.Margin = new System.Windows.Forms.Padding(2);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(206, 40);
             this.startBtn.TabIndex = 0;
@@ -57,7 +57,7 @@
             // stopBtn
             // 
             this.stopBtn.Location = new System.Drawing.Point(14, 261);
-            this.stopBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.stopBtn.Margin = new System.Windows.Forms.Padding(2);
             this.stopBtn.Name = "stopBtn";
             this.stopBtn.Size = new System.Drawing.Size(206, 40);
             this.stopBtn.TabIndex = 1;
@@ -180,9 +180,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.stopBtn);
             this.Controls.Add(this.startBtn);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ManagerForm";
-            this.Text = "Form2";
+            this.Text = "ManagerForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ManagerForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

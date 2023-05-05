@@ -12,12 +12,6 @@ namespace donateTimer
 {
     public partial class MainForm : Form
     {
-        //private const string TWIP_KEY = "4bYpPmP5zXp";
-        //private const string TOONATION_KEY = "5ea3ea50ab1a9fb06e990a0a2d84ac4f";
-
-        //private const string TWIP_KEY = "PBvNXmw5qp";
-        //private const string TOONATION_KEY = "f07544f8835c57c908763ae409bb2bb2";
-
         private bool isConnectTwip = false;
         private bool isConnectToonation = false;
 
@@ -87,7 +81,9 @@ namespace donateTimer
             if (isConnectTwip && isConnectToonation)
             {
                 new ManagerForm().Show();
-                new TimerForm().Show();
+                TimerForm timerForm = new TimerForm();
+                TimeController.GetInstance().label = timerForm.timeLabel;
+                timerForm.Show();
                 Close();
                 return;
             }

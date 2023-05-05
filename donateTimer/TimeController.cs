@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace donateTimer
 {
@@ -12,6 +14,7 @@ namespace donateTimer
     {
         public TimeSpan nowTime = new TimeSpan(24, 0, 0);
         public Option option = new Option();
+        public Label label;
 
         private Stopwatch stopwatch = new Stopwatch();
 
@@ -77,18 +80,56 @@ namespace donateTimer
             switch (donate.type)
             {
                 case Type.Add:
-                    if (option.addChecked)
+                    if (option.addChecked || donate.platform == Platform.Admin)
                         AddTimeFromMilliseconds(mills);
                     break;
 
                 case Type.Sub:
-                    if (option.subChecked)
+                    if (option.subChecked || donate.platform == Platform.Admin)
                         SubTimeFromMilliseconds(mills);
                     break;
 
                 default: break;
 
             }
+            ChangeLabelColor(donate.type);
+        }
+
+        CancellationTokenSource cts = null;
+        Task myTask2;
+
+        void ChangeLabelColor(Type type)
+        {
+            if (myTask2 != null && cts != null)
+            {
+                cts.Cancel();
+            }
+
+            cts = new CancellationTokenSource();
+            CancellationToken token = cts.Token;
+            myTask2 = Task<int>.Run(() =>
+            {
+                token.ThrowIfCancellationRequested();
+                Color color = new Color();
+                switch (type)
+                {
+                    case Type.Add:
+                        color = Color.Green;
+                        break;
+
+                    case Type.Sub:
+                        color = Color.Red;
+                        break;
+
+                    default: break;
+                }
+                label.ForeColor = color;
+                Thread.Sleep(2000);
+                token.ThrowIfCancellationRequested();
+                label.ForeColor = Color.Black;
+            }, token);
+
+
         }
 
         public void SubDonate(Donate donate)

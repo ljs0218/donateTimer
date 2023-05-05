@@ -35,6 +35,7 @@
             // 
             // timeLabel
             // 
+            this.timeLabel.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.timeLabel.AutoSize = true;
             this.timeLabel.Font = new System.Drawing.Font("굴림", 54F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.timeLabel.Location = new System.Drawing.Point(2, 9);
@@ -43,6 +44,7 @@
             this.timeLabel.Size = new System.Drawing.Size(441, 72);
             this.timeLabel.TabIndex = 0;
             this.timeLabel.Text = "00:00:00.00";
+            this.timeLabel.Click += new System.EventHandler(this.timeLabel_Click);
             // 
             // timer1
             // 
@@ -57,9 +59,10 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(488, 92);
             this.Controls.Add(this.timeLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TimerForm";
-            this.Text = "Form1";
+            this.Text = "Timer";
             this.Load += new System.EventHandler(this.TimerForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -67,9 +70,8 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.Timer timer1;
+        public System.Windows.Forms.Label timeLabel;
     }
 }
 

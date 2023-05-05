@@ -32,5 +32,10 @@ namespace donateTimer
             TimeSpan ts = TimeController.GetInstance().nowTime;
             this.timeLabel.Text = string.Format(TIME_FORMAT, (int)ts.TotalHours, ts);
         }
+
+        private void timeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
